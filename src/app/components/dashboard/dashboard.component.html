@@ -1,0 +1,16 @@
+<div id="liste-blocks" class="grid grid-cols-3 p-4 gap-4">
+  <!-- '!' pour ecraser la couleur du mat-card -->
+  @for(element of kpis;track element.id) {
+  <mat-card id="b1" class="text-white p-4" [ngClass]="element.color">
+    <div class="flex items-center gap-x-4">
+      <mat-icon id="b1-col1">{{ element.icon }}</mat-icon>
+      <div id="b1-col2">
+        <div id="titre" class="uppercase text-sm opacity-80">
+          {{ element.title }}
+        </div>
+        <div id="valeur" class="text-2xl font-bold">{{ element.value }}</div>
+      </div>
+    </div>
+  </mat-card>
+  }
+</div>
