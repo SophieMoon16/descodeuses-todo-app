@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, RouterModule, RouterOutlet } from '@angular/router';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+
 //'@' signifie decorateur
 //qui decore la classe component
 // il vient juste avant la classe
@@ -26,7 +28,13 @@ export class LoginComponent implements OnInit {
 
   //'private' avant formBuilder pour pouvoir acceder a la variable
   //en dehors du constructeur
-  constructor(private formBuilder: FormBuilder, private router: Router) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    public authService: AuthService
+  ) {
+    //le service authService est injecté pour pouvoir l'utiliser
+  }
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
@@ -39,19 +47,14 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
-      console.log(this.loginForm.value.username);
-
-      //ca donne undefined
-      //erreur non identifie car formulaire non type
-      console.log(this.loginForm.value.username2);
-      if (
-        this.loginForm.value.username == 'admin@test.com' &&
-        this.loginForm.value.password == 'admin'
-      ) {
-        sessionStorage.setItem('isLoggedIn', 'true');
-        this.router.navigateByUrl('');
-      }
+      const credentials = this.loginForm.value;
+      this.authService.login(credentials).subscribe({
+        next: (res) => {
+          sessionStorage.setItem('authToken', res.token);
+          this.router.navigateByUrl('');
+        },
+        error: (err) => console.error('Erreur de connexion', err),
+      });
     }
   }
 }

@@ -17,4 +17,6 @@ export interface Todo {
   dueDate: string;
 
   description: string | null;
+
+  memberIds: (number | null)[];
 }

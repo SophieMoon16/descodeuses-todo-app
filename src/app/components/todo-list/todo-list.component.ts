@@ -24,6 +24,7 @@ export class TodoListComponent implements OnInit {
       title: ['', [Validators.required]],
     });
   }
+
   ngOnInit(): void {
     this.fetchTodo();
   }
@@ -46,6 +47,7 @@ export class TodoListComponent implements OnInit {
         priority: null,
         dueDate: '',
         description: null,
+        memberIds: [],
       };
 
       this.todoService.addTodo(todo).subscribe((data) => {

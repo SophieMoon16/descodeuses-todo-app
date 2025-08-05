@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Todo } from '../models/todo.model';
+import { environment } from '../../environments/environment';
 
 //commande pour creer le fichier:
 //ng g service todo
@@ -9,19 +10,18 @@ import { Todo } from '../models/todo.model';
 
 //Il fait les operations CRUD: Create, Read, Update, Delete
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TodoService {
-
-  private apiURL = 'api/todos';
+  private apiURL = environment.apiUrl + '/api/action';
 
   //HttpClient pour communiquer avec le API/Backend
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  //C R U D 
+  //C R U D
 
   //C : Create
-  addTodo(item : Todo) {
+  addTodo(item: Todo) {
     //<Todo> : type de retour de l'appel HTTP
     return this.http.post<Todo>(this.apiURL, item);
   }
@@ -35,18 +35,17 @@ export class TodoService {
 
   //R : Read
   //Fetch one item de todo par son Id
-  getTodo(id : number) {
-    return this.http.get<Todo>(this.apiURL +'/'+ id);
+  getTodo(id: number) {
+    return this.http.get<Todo>(this.apiURL + '/' + id);
   }
 
   //U : Update
-  updateTodo(item : Todo) {
-    return this.http.put<Todo>(this.apiURL +'/'+ item.id, item);
+  updateTodo(item: Todo) {
+    return this.http.put<Todo>(this.apiURL + '/' + item.id, item);
   }
 
   //D : Delete
-  deleteTodo(id : number) {
-    return this.http.delete(this.apiURL +'/'+ id);
+  deleteTodo(id: number) {
+    return this.http.delete(this.apiURL + '/' + id);
   }
-
 }

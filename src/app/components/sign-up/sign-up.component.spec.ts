@@ -8,9 +8,8 @@ describe('SignUpComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SignUpComponent]
-    })
-    .compileComponents();
+      declarations: [SignUpComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SignUpComponent);
     component = fixture.componentInstance;
@@ -20,4 +19,7 @@ describe('SignUpComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  /*it('formulaire invalide si firstName vide', ()=>{
+  component.signUpForm.controls['firstname'].setvalue('');
+  expect(componenent.signUpForm.valid).toBeFalse();})*/
 });
