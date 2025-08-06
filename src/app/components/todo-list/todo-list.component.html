@@ -11,24 +11,24 @@
   </form>
   <div id="todo-liste">
     <mat-list>
-      @for(todo of todos; track todo.id) {
-      <mat-list-item>
+      <mat-list-item *ngFor="let todo of todos">
         <div class="flex items-center">
           <mat-checkbox
             [checked]="todo.completed"
             (change)="onCheckChange($event, todo)"
-          ></mat-checkbox>
+          >
+          </mat-checkbox>
           <span
             [routerLink]="['/todo-detail', todo.id]"
             class="flex-1 cursor-pointer"
-            >{{ todo.title }}</span
           >
+            {{ todo.title }}
+          </span>
           <button mat-icon-button (click)="onDeleteTodo(todo.id)">
             <mat-icon>delete</mat-icon>
           </button>
         </div>
       </mat-list-item>
-      }
     </mat-list>
   </div>
 </mat-card>
