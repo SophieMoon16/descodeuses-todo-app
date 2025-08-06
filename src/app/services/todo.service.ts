@@ -19,7 +19,6 @@ export class TodoService {
   constructor(private http: HttpClient) {}
 
   //C R U D
-
   //C : Create
   addTodo(item: Todo) {
     //<Todo> : type de retour de l'appel HTTP

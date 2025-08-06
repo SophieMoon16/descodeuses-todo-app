@@ -6,15 +6,20 @@ import { Todo } from '../../models/todo.model';
   selector: 'app-todo-table',
   standalone: false,
   templateUrl: './todo-table.component.html',
-  styleUrl: './todo-table.component.css'
+  styleUrl: './todo-table.component.css',
 })
 export class TodoTableComponent implements OnInit {
   todos: Todo[] = [];
-  displayedColumns: string[] = ['id', 'title', 'completed', 'priority', 'dueDate', 'description'];
+  displayedColumns: string[] = [
+    'id',
+    'title',
+    'completed',
+    'priority',
+    'dueDate',
+    'description',
+  ];
 
-  constructor(private todoService : TodoService) {
-
-  }
+  constructor(private todoService: TodoService) {}
 
   ngOnInit(): void {
     this.fetchTodo();
@@ -23,8 +28,8 @@ export class TodoTableComponent implements OnInit {
   fetchTodo() {
     //Communication asynchrone donc il faut s'inscrire pour avoir le retour
     this.todoService.getTodos().subscribe((data) => {
+      console.log('Données reçues depuis le service Todo:', data);
       this.todos = data;
     });
   }
-
 }
