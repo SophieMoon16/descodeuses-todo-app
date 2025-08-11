@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-todo-detail',
+  standalone: true, // <= important
   templateUrl: './todo-detail.component.html',
   styleUrls: ['./todo-detail.component.css'],
 })
