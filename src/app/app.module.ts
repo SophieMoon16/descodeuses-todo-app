@@ -37,6 +37,7 @@ import { authInterceptor } from './core/auth.interceptor';
     SignUpComponent,
     TodoListComponent,
     UtilisateurListComponent,
+    TodoDetailComponent,
     TodoTableComponent,
     DashboardComponent,
   ],
