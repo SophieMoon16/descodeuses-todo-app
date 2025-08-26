@@ -28,6 +28,7 @@ export class TodoDetailComponent implements OnInit {
     private fb: FormBuilder,
     private snackbar: MatSnackBar
   ) {}
+  users: { id: number; username: string }[] = [];
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -44,6 +45,7 @@ export class TodoDetailComponent implements OnInit {
         priority: [this.todo.priority],
         dueDate: [this.todo.dueDate],
         description: [this.todo.description],
+        memberIds: [this.todo.memberIds],
       });
     });
   }

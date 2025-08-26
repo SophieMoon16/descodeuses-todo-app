@@ -47,46 +47,40 @@ export class DashboardComponent implements OnInit {
   }
 
   fetchTodo() {
-    //Communication asynchrone donc il faut s'inscrire pour avoir le retour
     this.todoService.getTodos().subscribe((data) => {
       this.todos = data;
-      let today = new Date(2025, 5, 10);
+
+      // Date du jour (sans les heures)
+      let today = new Date();
+      today.setHours(0, 0, 0, 0);
+
       let countUrgent = 0,
         countToday = 0,
         countLate = 0;
 
-      //Urgentes: priority = 1 Et due date = Aujourd'hui
-      //"==" n'est pas utilisable avec les objets Date
-      //pour cela je convertis en string avec la fonction .toDateString()
-      //afin de pouvoir utiliser "=="
-      countUrgent = this.todos.filter(
-        (c) =>
-          c.priority == '1' &&
-          new Date(c.dueDate).toDateString() == today.toDateString()
-      ).length;
+      this.todos.forEach((todo) => {
+        let due = new Date(todo.dueDate);
+        due.setHours(0, 0, 0, 0);
 
-      this.kpis[2].value = countUrgent;
+        // Urgentes : priorité = 1 et date = aujourd'hui
+        if (Number(todo.priority) === 1 && due.getTime() === today.getTime()) {
+          countUrgent++;
+        }
 
-      //A faire aujourd'hui: due date = Aujourd'hui
-      //En utilisant la boucle for pour travers la liste todos
-      //Remplir la valeur de countToday
-      //A faire aujourd'hui: due date = Aujourd'hui
-      //En utilisant la boucle for pour travers la liste todos
-      //Remplir la valeur de countToday
-      for (let item of this.todos) {
-        if (new Date(item.dueDate).toDateString() == today.toDateString()) {
+        // A faire aujourd'hui
+        if (due.getTime() === today.getTime()) {
           countToday++;
-          this.kpis[0].value = countToday;
-          console.log(countToday);
         }
-      }
 
-      for (let i = 0; i < this.todos.length; i++) {
-        if (new Date(this.todos[i].dueDate) < today) {
-          countLate = countLate + 1;
-          this.kpis[1].value = countLate;
+        // En retard : date passée
+        if (due.getTime() < today.getTime()) {
+          countLate++;
         }
-      }
+      });
+
+      this.kpis[0].value = countToday;
+      this.kpis[1].value = countLate;
+      this.kpis[2].value = countUrgent;
     });
   }
 }
